@@ -9,8 +9,15 @@ function getComputerChoice() {
     return Math.floor(Math.random() * 3) + 1;
 }
 function getHumanChoice() {
-    const choice = parseInt(prompt("Enter the Choice: \n 1 : Rock \n 2: Paper \n 3: Scissor"))
-    return choice;
+    const inp = document.querySelectorAll("button")
+    let user_inp;
+    inp.forEach((button) => {
+        button.addEventListener("click", (event) => {
+            user_inp = event.target.id;
+            // console.log(user_inp);
+        });
+    });
+
 }
 
 function playgame() {
