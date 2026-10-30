@@ -1,81 +1,100 @@
-// so designing a game of rock paper and scissor will have some things
-// for the game the random will generate random number which gives from 0 to 1 and then we multiple by
-// 3 so taht we get 0.11 1.1 2.1 like values and when we floor them we get 0 1 2 but we had 1 2 3
-// so we add 1
-// and  it can result 1 2 3 and then if 1 then rock 2 for paper and 3 forscissor,
-// accordingly i need to do it 5 times and then addup the scores and display the winner
+
+let humanScore = 0;
+let computerScore = 0;
+let roundsPlayed = 0;
 
 function getComputerChoice() {
     return Math.floor(Math.random() * 3) + 1;
 }
+
+// Converts button ID into a numeric choice
+function encodeChoice(userChoice) {
+    let choice = 1;
+
+    if (userChoice === "paper") {
+        choice = 2;
+    }
+
+    if (userChoice === "scissors" || userChoice === "scissor") {
+        choice = 3;
+    }
+
+    return choice;
+}
+
+// Converts numeric choice into readable text
+function decodeChoice(computerChoice) {
+    let choice = "rock";
+
+    if (computerChoice === 2) {
+        choice = "paper";
+    }
+
+    if (computerChoice === 3) {
+        choice = "scissors";
+    }
+
+    return choice;
+}
+
 function getHumanChoice() {
-    const inp = document.querySelectorAll("button")
-    let user_inp;
-    inp.forEach((button) => {
+    const buttons = document.querySelectorAll("button");
+
+    buttons.forEach((button) => {
         button.addEventListener("click", (event) => {
-            user_inp = event.target.id;
-            // console.log(user_inp);
+
+            if (roundsPlayed >= 5) {
+                return;
+            }
+
+            const userChoice = event.target.id;
+            const humanChoice = encodeChoice(userChoice);
+            const computerChoice = getComputerChoice();
+
+            roundsPlayed++;
+
+            console.log("ROUND:", roundsPlayed);
+            console.log("Human:", userChoice, "Computer:", decodeChoice(computerChoice));
+
+            playRound(humanChoice, computerChoice);
+
+            console.log("Human Score:", humanScore);
+            console.log("Computer Score:", computerScore);
+
+            if (roundsPlayed === 5) {
+                console.log("\n--- FINAL RESULT ---");
+
+                if (humanScore > computerScore) {
+                    console.log("Human Wins!");
+                } else if (humanScore < computerScore) {
+                    console.log("Computer Wins!");
+                } else {
+                    console.log("It's a Tie!");
+                }
+            }
         });
     });
-
 }
 
-function playgame() {
+function playRound(humanChoice, computerChoice) {
 
-    function playround(HumanChoice, ComputerChoice) {
-        if (HumanChoice === 1 && ComputerChoice === 1)
-            console.log("Its a tie ")
-        else if (HumanChoice === 1 && ComputerChoice === 2) {
-            console.log("You Lose, Paper Beats Rock ");
-            ComputerScore++;
-        }
-        else if (HumanChoice === 1 && ComputerChoice === 3) {
-            console.log("You Win, Rock Beats Scissors ");
-            HumanScore++;
-        }
-        else if (HumanChoice === 2 && ComputerChoice === 1) {
-            console.log("You Win, Paper Beats Rock ");
-            HumanScore++;
-        }
-        else if (HumanChoice === 2 && ComputerChoice === 2)
-            console.log("Its a tie ")
-        else if (HumanChoice === 2 && ComputerChoice === 3) {
-            console.log("You Lose, Scissors Beats Paper ");
-            ComputerScore++;
-        }
-        else if (HumanChoice === 3 && ComputerChoice === 1) {
-            console.log("You Lose, Rock Beats Scissors ");
-            ComputerScore++;
-        }
-
-        else if (HumanChoice === 3 && ComputerChoice === 2) {
-            console.log("You Win, Scissor Beats Paper ");
-            HumanScore++;
-        }
-        else if (HumanChoice === 3 && ComputerChoice === 3)
-            console.log("Its a tie ")
+    if (humanChoice === computerChoice) {
+        console.log("It's a tie!");
     }
 
-    let HumanScore = 0;
-    let ComputerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        console.log("ROUND:", i + 1);
-
-        console.log("Human:", humanSelection, "Computer:", computerSelection);
-        playround(humanSelection, computerSelection);
+    else if (
+        (humanChoice === 1 && computerChoice === 3) ||
+        (humanChoice === 2 && computerChoice === 1) ||
+        (humanChoice === 3 && computerChoice === 2)
+    ) {
+        console.log("You win this round!");
+        humanScore++;
     }
-    console.log(HumanScore)
-    console.log(ComputerScore)
-    if (HumanScore > ComputerScore)
-        console.log("Human Wins !!!")
-    else if (HumanScore < ComputerScore)
-        console.log("Computer Wins !!!")
-    else if (HumanScore === ComputerScore)
-        console.log("I a Tie !!!")
 
+    else {
+        console.log("Computer wins this round!");
+        computerScore++;
+    }
 }
 
-
-playgame();
+getHumanChoice();
