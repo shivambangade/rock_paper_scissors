@@ -42,6 +42,14 @@ function getHumanChoice() {
 
     buttons.forEach((button) => {
         button.addEventListener("click", (event) => {
+            if (event.target.id === "retry") {
+                humanScore = 0;
+                computerScore = 0;
+                roundsPlayed = 0;
+
+                console.clear();
+                return;
+            }
 
             if (roundsPlayed >= 5) {
                 return;
@@ -71,6 +79,7 @@ function getHumanChoice() {
                 } else {
                     console.log("It's a Tie!");
                 }
+                console.log("Press Retry to Play again");
             }
         });
     });
