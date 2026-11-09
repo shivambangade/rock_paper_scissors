@@ -1,0 +1,26 @@
+body{
+    background-color: rgb(158, 219, 158);
+    display: flex;
+    flex-direction: column;
+}
+#heading,#round{
+ text-align: center;
+}
+#heading{
+    border: 4px solid black;
+
+}
+#scores{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+
+
+#buttons
+{
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 160px;
+    padding: 15px 32px; 
+}
